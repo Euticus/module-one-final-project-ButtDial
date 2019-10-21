@@ -1,12 +1,16 @@
 require_relative '../config/environment'
 require 'pry'
+require 'figlet'
 
-#user = User.create(:username => "ohnickmoy")
-#restaurant = Restaurant.create(:name => "Starbucks", :location => "55 Broadway, New York, NY 10006")
 
-#code = BathroomCode.create(bathroom_code: 12345)
+font = Figlet::Font.new('fonts/big.flf')
+figlet = Figlet::Typesetter.new(font)
 
-binding.pry
+puts figlet['Welcome to ButtDial']
 
-#puts "HELLO WORLD"
+generate_menu
+
+#binding.pry
+
+
 puts "Yo, I gotta peee soooo bad :("
