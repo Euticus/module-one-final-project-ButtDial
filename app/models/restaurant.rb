@@ -1,5 +1,5 @@
 class Restaurant < ActiveRecord::Base
-  has_many :code
-  has_many :user, through: :code
+  has_many :bathroom_codes
+  has_many :users, through: :bathroom_codes
 
 end 
