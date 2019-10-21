@@ -1,5 +1,0 @@
-class BathroomCode
-
-
-
-end 
