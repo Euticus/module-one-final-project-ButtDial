@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
     puts "Welcome #{username}! What would you like to do?"
     prompt_instance.select("Choose an option") do |menu|
       menu.choice 'Check the codes I made', -> {user_obj.list_my_codes}
-      menu.choice 'Exit', -> {system "exit"}
+      menu.choice 'Logout', -> {ButtDial.new.generate_menu}
     end
   end
 
@@ -28,12 +28,16 @@ class User < ActiveRecord::Base
 
   def list_my_codes
     my_codes = self.bathroom_codes
-    my_codes.each do |code|
+    self.print_code_info(my_codes)
+    User.generate_user_session_menu(self.username)
+  end
+
+  def print_code_info(codes)
+    codes.each do |code|
       puts "Restaurant: #{code.restaurant.name}"
       puts "Location: #{code.restaurant.location}"
       puts "Code: #{code.bathroom_code}"
       puts '*' * 25
     end
-    User.generate_user_session_menu(self.username)
   end
 end 

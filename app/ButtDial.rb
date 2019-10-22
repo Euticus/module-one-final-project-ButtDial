@@ -1,10 +1,10 @@
 #require 'tty-prompt'
-require 'pry'
+#require 'pry'
 
 class ButtDial 
   
   def run 
-    generate_menu
+    self.generate_menu
   end 
   
   def prompt_instance
