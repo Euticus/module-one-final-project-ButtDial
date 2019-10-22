@@ -5,7 +5,6 @@ require 'pry'
 class ButtDial 
   
   def run 
-
     generate_menu
   end 
   
@@ -16,7 +15,7 @@ class ButtDial
   def generate_menu      #First Menu screen 
       prompt_instance.select("Choose an option") do |menu|
           menu.choice 'Create a new Code', -> {create_new_code_menu}
-          # menu.choice 'Login', -> {user_login}
+          menu.choice 'Look Up code', -> {list_of_all_codes}
           # menu.choice 'Exit', -> {system "exit"}
       end
   end
@@ -36,6 +35,18 @@ class ButtDial
     BathroomCode.create(bathroom_code: user_input, description: nil, user_id: nil, restaurant_id: restaurant.id)
   end
   
+  def list_of_all_codes
+    #get all the codes
+    # list them by code, restaruant, address
+    bathroom_codes_array = BathroomCode.all
+    bathroom_codes_array.each do |codes|
+      puts codes.bathroom_code.to_s + ": #{codes.restaurant.name}:  #{codes.restaurant.location}"
+    end 
+
+    # puts "these are all of em"
+    # puts codes + 
+    #  binding.pry
+  end
 
 
   # def user_input  #If 'Create an account selected'
