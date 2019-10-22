@@ -1,13 +1,10 @@
-require 'tty-prompt'
+#require 'tty-prompt'
 require 'pry'
-
 
 class ButtDial 
   
   def run 
     generate_menu
-
-
   end 
   
   def prompt_instance
@@ -16,6 +13,7 @@ class ButtDial
 
   def generate_menu      #First Menu screen 
       prompt_instance.select("Choose an option") do |menu|
+          menu.choice 'Login', -> {User.generate_login_menu}
           menu.choice 'Create a new Code', -> {create_new_code_menu}
           menu.choice 'Look Up code', -> {list_of_all_codes}
           menu.choice 'Exit', -> {system "exit"}
