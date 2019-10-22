@@ -6,6 +6,8 @@ class ButtDial
   
   def run 
     generate_menu
+
+
   end 
   
   def prompt_instance
@@ -16,7 +18,7 @@ class ButtDial
       prompt_instance.select("Choose an option") do |menu|
           menu.choice 'Create a new Code', -> {create_new_code_menu}
           menu.choice 'Look Up code', -> {list_of_all_codes}
-          # menu.choice 'Exit', -> {system "exit"}
+          menu.choice 'Exit', -> {system "exit"}
       end
   end
 

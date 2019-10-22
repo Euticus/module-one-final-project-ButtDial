@@ -6,7 +6,7 @@ require 'figlet'
 font = Figlet::Font.new('fonts/big.flf')
 figlet = Figlet::Typesetter.new(font)
 
-# puts figlet['Welcome to ButtDial']
+puts figlet['Welcome to ButtDial']
 
 bdsession = ButtDial.new
 bdsession.run
