@@ -22,24 +22,19 @@ class ButtDial
   end
 
   def create_new_code_menu
-    # user finds and selects location in list 
-    # user post for that location 
-    # prompt_instance
     restaurants_array = Restaurant.all
     prompt_instance.select("Which Restaurant were you at?") do |menu_item|
       restaurants_array.each do |restaurant| 
-        @restaurant_choice = restaurant.id
         menu_item_string = restaurant.name + ": " + restaurant.location
-        menu_item.choice (menu_item_string)
+        menu_item.choice menu_item_string, -> {create_new_bathroom_code(restaurant)}
       end
     end
-    
-    user_input = prompt_instance.ask("What's the code?", convert: :int)
-    BathroomCode.create(bathroom_code: user_input, description: nil, user_id: nil, restaurant_id: @restaurant_choice)
-    binding.pry
-
   end
 
+  def create_new_bathroom_code(restaurant)
+    user_input = prompt_instance.ask("What's the code?", convert: :int)
+    BathroomCode.create(bathroom_code: user_input, description: nil, user_id: nil, restaurant_id: restaurant.id)
+  end
   
 
 
