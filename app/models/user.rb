@@ -11,7 +11,14 @@ class User < ActiveRecord::Base
 
   def self.generate_login_menu
     user_input = prompt_instance.ask("What's your username?")
-    generate_user_session_menu(user_input)
+    #binding.pry
+    if User.find_by(username: user_input).nil?
+      puts "Looks like your username doesn't exist. How 'bout making it?'"
+      ButtDial.new.generate_menu
+    else
+      @@session_username
+      generate_user_session_menu(user_input)
+    end
   end
 
   def self.generate_user_session_menu(username)
@@ -52,28 +59,39 @@ class User < ActiveRecord::Base
     #binding.pry
     if self.bathroom_codes == []
       puts "Looks like you don't have anything here. You gotta use some public restrooms STAT!"
-      #binding.pry
+      
+    else 
+      my_codes = self.bathroom_codes
+      self.print_code_info(my_codes)
+    end 
+    #binding.pry
         # prompt_instance.on(:keypress) do |event|
           # if event.value == 'j'
           #   prompt_instance.trigger(:keydown)
           # end 
         # end
-
-    else 
-      my_codes = self.bathroom_codes
-      self.print_code_info(my_codes)
-      User.generate_user_session_menu(self.username)
-    end 
-    
+    User.generate_user_session_menu(self.username)
   end
 
   def print_code_info(codes)
+    print_separator
     codes.each do |code|
       puts "Restaurant: #{code.restaurant.name}"
       puts "Location: #{code.restaurant.location}"
       puts "Code: #{code.bathroom_code}"
       puts "Description: #{code.description}"
-      puts '*' * 25
+      print_separator
     end
+  end
+
+  def self.generate_create_account_menu
+    user_input = prompt_instance.ask("What do you want your username to be?")
+    User.create(username: user_input)
+    puts "Thanks for joining ButtDial!"
+    generate_user_session_menu(user_input)
+  end
+
+  def print_separator
+    puts "=" * 25
   end
 end 
