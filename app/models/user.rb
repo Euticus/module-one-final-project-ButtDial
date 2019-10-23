@@ -35,11 +35,29 @@ class User < ActiveRecord::Base
 
   
   def self.create_user
-     username = prompt_instance.ask("Choose a Username yo!")
-     User.create(username: username)
-     User.generate_user_session_menu(username)
+    user_input =  prompt_instance.ask("What do you want your username to be?")
+    User.create(username: user_input)
+    User.generate_user_session_menu(user_input)
      
   end 
+
+  # def self.create_user
+    # User.prompt_instance.select ("Choose an option") do |create_account_screen|
+    # create_account_screen.choice prompt_instance.ask("What do you want your username to be? (press SPACE to go back)")
+    # create_account_screen.choice "go back", -> {ButtDial.new.generate_menu}
+    #  username = prompt_instance.ask("Choose a Username yo!")
+    
+    #  User.create(username: user_input)
+    #  User.generate_user_session_menu(user_input)
+     
+  # end 
+
+  # def self.generate_create_account_menu
+    
+  #   User.create(username: user_input)
+  #   puts "Thanks for joining ButtDial!"
+  #   generate_user_session_menu(user_input)
+  # end
   
 
   def self.get_user_object(username)
@@ -65,11 +83,7 @@ class User < ActiveRecord::Base
       self.print_code_info(my_codes)
     end 
     #binding.pry
-        # prompt_instance.on(:keypress) do |event|
-          # if event.value == 'j'
-          #   prompt_instance.trigger(:keydown)
-          # end 
-        # end
+    User.prompt_instance.keypress("Press anywhere to get to Menu")
     User.generate_user_session_menu(self.username)
   end
 
@@ -84,12 +98,7 @@ class User < ActiveRecord::Base
     end
   end
 
-  def self.generate_create_account_menu
-    user_input = prompt_instance.ask("What do you want your username to be?")
-    User.create(username: user_input)
-    puts "Thanks for joining ButtDial!"
-    generate_user_session_menu(user_input)
-  end
+ 
 
   def print_separator
     puts "=" * 25

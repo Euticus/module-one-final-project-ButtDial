@@ -18,9 +18,10 @@ class BathroomCode < ActiveRecord::Base
           puts "Restaurant: " + codes.restaurant.name
           puts "Location: " + codes.restaurant.location
           puts "Description: " + codes.description.to_s
-          puts "*" * 25
-        end 
-        User.generate_user_session_menu(User.get_user)
+          puts "=" * 25
+        end
+        User.prompt_instance.keypress("Press anywhere to get to Menu")
+        User.generate_user_session_menu(User.get_user.username)
       end
 
 
@@ -40,6 +41,8 @@ class BathroomCode < ActiveRecord::Base
                             description: set_description,
                             user_id: User.get_user_id, 
                             restaurant_id: restaurant.id)
+        User.prompt_instance.keypress("Press anywhere to get to Menu")
+        User.generate_user_session_menu(User.get_user.username)
       end
 
       def self.set_description
