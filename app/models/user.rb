@@ -43,6 +43,10 @@ class User < ActiveRecord::Base
     @@session_user_obj.id 
   end
 
+  def self.get_user
+    @@session_user_obj
+  end
+
 
   def list_my_codes
     #binding.pry

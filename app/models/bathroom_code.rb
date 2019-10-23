@@ -20,6 +20,7 @@ class BathroomCode < ActiveRecord::Base
           puts "Description: " + codes.description.to_s
           puts "*" * 25
         end 
+        User.generate_user_session_menu(User.get_user)
       end
 
 
