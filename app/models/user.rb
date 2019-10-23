@@ -9,6 +9,18 @@ class User < ActiveRecord::Base
     TTY::Prompt.new
   end
 
+  def self.get_user_object(username)
+    User.find_by username: username
+  end
+
+  def self.get_user_id
+    @@session_user_obj.id 
+  end
+
+  def self.get_user
+    @@session_user_obj
+  end
+
   def self.generate_login_menu
     user_input = prompt_instance.ask("What's your username?")
     #binding.pry
@@ -29,48 +41,22 @@ class User < ActiveRecord::Base
       menu.choice 'Check the codes I made', -> {user_obj.list_my_codes}
       menu.choice 'Create a new Code', -> {BathroomCode.create_new_code_menu}
       menu.choice 'Look Up code', -> {BathroomCode.list_of_all_codes}
+      menu.choice 'Delete My Entries', -> {user_obj.delete_my_entries}
       menu.choice 'Logout', -> {ButtDial.new.generate_menu}
     end
   end
 
   
   def self.create_user
-    user_input =  prompt_instance.ask("What do you want your username to be?")
+    prompt_instance.select("Create a Username") do |menu|
+      menu.choice "Enter Username", -> {user_input =  prompt_instance.ask("What is your username to be?")}
+      menu.choice 'Go back', -> {ButtDial.new.generate_menu}
+    end 
     User.create(username: user_input)
     User.generate_user_session_menu(user_input)
-     
   end 
 
-  # def self.create_user
-    # User.prompt_instance.select ("Choose an option") do |create_account_screen|
-    # create_account_screen.choice prompt_instance.ask("What do you want your username to be? (press SPACE to go back)")
-    # create_account_screen.choice "go back", -> {ButtDial.new.generate_menu}
-    #  username = prompt_instance.ask("Choose a Username yo!")
-    
-    #  User.create(username: user_input)
-    #  User.generate_user_session_menu(user_input)
-     
-  # end 
-
-  # def self.generate_create_account_menu
-    
-  #   User.create(username: user_input)
-  #   puts "Thanks for joining ButtDial!"
-  #   generate_user_session_menu(user_input)
-  # end
   
-
-  def self.get_user_object(username)
-    User.find_by username: username
-  end
-
-  def self.get_user_id
-    @@session_user_obj.id 
-  end
-
-  def self.get_user
-    @@session_user_obj
-  end
 
 
   def list_my_codes
@@ -102,5 +88,14 @@ class User < ActiveRecord::Base
 
   def print_separator
     puts "=" * 25
+  end
+
+
+  
+  def delete_my_entries
+    BathroomCode.where(user_id: self.id).destroy_all
+    puts "You've deleted all your entries"
+    User.prompt_instance.keypress("Press anywhere to get to Menu")
+    User.generate_user_session_menu(self.username)
   end
 end 

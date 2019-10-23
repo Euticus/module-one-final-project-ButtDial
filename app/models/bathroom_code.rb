@@ -9,11 +9,8 @@ class BathroomCode < ActiveRecord::Base
     end
 
     def self.list_of_all_codes
-        #get all the codes
-        # list them by code, restaruant, address
         bathroom_codes_array = BathroomCode.all
         bathroom_codes_array.each do |codes|
-            #binding.pry
           puts "Bathroom Code: " + codes.bathroom_code.to_s 
           puts "Restaurant: " + codes.restaurant.name
           puts "Location: " + codes.restaurant.location
@@ -32,6 +29,7 @@ class BathroomCode < ActiveRecord::Base
             menu_item_string = restaurant.name + ": " + restaurant.location
             menu_item.choice menu_item_string, -> {create_new_bathroom_code(restaurant)}
           end
+            menu_item.choice 'Go Back', -> {User.generate_user_session_menu(User.get_user.username)}
         end
       end
 
@@ -48,6 +46,8 @@ class BathroomCode < ActiveRecord::Base
       def self.set_description
         description_input = prompt_instance.ask("Would you like to add other description?", convert: :string)
       end 
+
+
 
       
 
