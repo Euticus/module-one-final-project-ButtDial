@@ -14,6 +14,7 @@ class ButtDial
   def generate_menu      #First Menu screen 
       prompt_instance.select("Choose an option") do |menu|
           menu.choice 'Login', -> {User.generate_login_menu}
+          menu.choice 'Create a new account', -> {User.generate_create_account_menu}
           menu.choice 'Create a new Code', -> {create_new_code_menu}
           menu.choice 'Look Up code', -> {list_of_all_codes}
           menu.choice 'Exit', -> {system "exit"}

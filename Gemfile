@@ -8,7 +8,7 @@ gem "sinatra-activerecord"
 gem 'rake'
 gem 'tty-prompt'
 gem 'figlet'
-gem 'lolcat'
+gem 'colorize'
 
 
 gem "require_all"
