@@ -13,4 +13,4 @@ bdsession.run
 # binding.pry
 
 
-puts "Yo, I gotta peee soooo bad :("
+puts "Until next time-- ButtDial it in"

@@ -4,7 +4,7 @@
 class ButtDial 
   
   def run 
-    self.generate_menu
+    generate_menu
   end 
   
   def prompt_instance
@@ -13,40 +13,17 @@ class ButtDial
 
   def generate_menu      #First Menu screen 
       prompt_instance.select("Choose an option") do |menu|
+          menu.choice 'Create Account', -> {User.create_user}
           menu.choice 'Login', -> {User.generate_login_menu}
-          menu.choice 'Create a new Code', -> {create_new_code_menu}
-          menu.choice 'Look Up code', -> {list_of_all_codes}
           menu.choice 'Exit', -> {system "exit"}
       end
   end
 
-  def create_new_code_menu
-    restaurants_array = Restaurant.all
-    prompt_instance.select("Which Restaurant were you at?") do |menu_item|
-      restaurants_array.each do |restaurant| 
-        menu_item_string = restaurant.name + ": " + restaurant.location
-        menu_item.choice menu_item_string, -> {create_new_bathroom_code(restaurant)}
-      end
-    end
-  end
-
-  def create_new_bathroom_code(restaurant)
-    user_input = prompt_instance.ask("What's the code?", convert: :int)
-    BathroomCode.create(bathroom_code: user_input, description: nil, user_id: nil, restaurant_id: restaurant.id)
-  end
   
-  def list_of_all_codes
-    #get all the codes
-    # list them by code, restaruant, address
-    bathroom_codes_array = BathroomCode.all
-    bathroom_codes_array.each do |codes|
-      puts codes.bathroom_code.to_s + ": #{codes.restaurant.name}:  #{codes.restaurant.location}"
-    end 
 
-    # puts "these are all of em"
-    # puts codes + 
-    #  binding.pry
-  end
+  
+  
+ 
 
 
   # def user_input  #If 'Create an account selected'
