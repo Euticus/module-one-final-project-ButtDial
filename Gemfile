@@ -9,6 +9,7 @@ gem 'rake'
 gem 'tty-prompt'
 gem 'figlet'
 gem 'colorize'
+gem 'rest-client'
 
 
 gem "require_all"

@@ -1,6 +1,7 @@
 require 'pry'
 
 class BathroomCode < ActiveRecord::Base
+  
   belongs_to :user 
   belongs_to :restaurant
 
@@ -46,7 +47,6 @@ class BathroomCode < ActiveRecord::Base
                           restaurant_id: restaurant.id)
     else 
       restaurant.bathroom_codes.first.update(bathroom_code: user_input, description: set_description)
-      
       puts "We updated our records"
     end 
       User.prompt_instance.keypress("Press anywhere to get to Menu")
