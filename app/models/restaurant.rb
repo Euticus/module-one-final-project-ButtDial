@@ -28,10 +28,19 @@ class Restaurant < ActiveRecord::Base
       puts "Description: #{code.description}"
       print_separator
     end
-    User.generate_user_session_menu
+    User.generate_user_session(User.get_user.username)
+  end
+
+  def self.create_new_restaurant
+    new_restaurant_info = prompt_instance.collect do
+      key(:name).ask('Enter a restaurant name')
+      key(:location).ask('Enter an address or location')
+    end
+    Restaurant.create(new_restaurant_info)
+    BathroomCode.create_new_code_menu
   end
 
   def self.print_separator
-    puts "=" * 25
+    puts "=".red * 25
   end
 end 

@@ -8,7 +8,5 @@ puts figlet['Welcome to ButtDial'].light_blue
 
 bdsession = ButtDial.new
 bdsession.run
-#binding.pry
-
 
 puts "Until next time-- ButtDial it in"
