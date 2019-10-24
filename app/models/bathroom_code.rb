@@ -39,15 +39,22 @@ class BathroomCode < ActiveRecord::Base
 
   def self.create_new_bathroom_code(restaurant)
     user_input = prompt_instance.ask("What's the code?", convert: :int)
-    BathroomCode.create(bathroom_code: user_input, 
-                        description: set_description,
-                        user_id: User.get_user_id, 
-                        restaurant_id: restaurant.id)
-    User.prompt_instance.keypress("Press anywhere to get to Menu")
-    User.generate_user_session(User.get_user.username)
+    if restaurant.bathroom_codes == []
+      BathroomCode.create(bathroom_code: user_input, 
+                          description: set_description,
+                          user_id: User.get_user_id, 
+                          restaurant_id: restaurant.id)
+    else 
+      restaurant.bathroom_codes.first.update(bathroom_code: user_input, description: set_description)
+      
+      puts "We updated our records"
+    end 
+      User.prompt_instance.keypress("Press anywhere to get to Menu")
+      User.generate_user_session(User.get_user.username)
   end
 
+
   def self.set_description
-    description_input = prompt_instance.ask("Would you like to add other description?", convert: :string)
+    description_input = prompt_instance.ask("Would you like to add a review?", convert: :string)
   end
 end 
