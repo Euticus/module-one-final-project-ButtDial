@@ -1,4 +1,4 @@
-class APITest
+class APICaller
 
     def do_the_thing
         uri = URI.parse("https://developers.zomato.com/api/v2.1/search?entity_id=280&entity_type=city&lat=40.7589&lon=-73.9790&radius=250")
