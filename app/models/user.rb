@@ -4,8 +4,12 @@ class User < ActiveRecord::Base
   has_many :bathroom_codes
   has_many :restaurants, through: :bathroom_codes
 
+  lat = @latitude
+  lon = @longitude 
+
   @@session_user_obj = nil
   @@user_session_location = nil
+  @@location = nil
 
   def self.prompt_instance
     TTY::Prompt.new
@@ -52,6 +56,7 @@ class User < ActiveRecord::Base
   end
 
   def generate_user_session_menu
+    binding.pry
     User.prompt_instance.select(" Choose an option") do |menu|
       menu.choice 'Check the codes I made', -> {self.list_my_codes}
       menu.choice 'Create a new Code', -> {BathroomCode.create_new_code_menu}
@@ -107,5 +112,26 @@ class User < ActiveRecord::Base
   def self.set_my_location
     @@user_session_location = UserLocation.new
     @@user_session_location.set_location_by_ip
+    @latitude = @@user_session_location.latitude
+    @longitude = @@user_session_location.longitude
+    #binding.pry
   end
+
+ def user_location(lat, lon)
+    @@location = "&lat=#{lat}&lon=#{lon}"
+  end 
+
+  def self.location
+    @@location
+  end 
+ 
+  def find_restarants
+    ap1 = APITest.new
+    testhash = ap1.do_the_thing
+    APITest.parse_info(testhash)
+  end 
+
+# @@user_session_location.latitude
+# @@user_session_location.longitude
+ 
 end 

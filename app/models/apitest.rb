@@ -1,6 +1,6 @@
 class APITest
     def do_the_thing
-        uri = URI.parse("https://developers.zomato.com/api/v2.1/search?entity_id=280&entity_type=city&lat=40.7589&lon=-73.9790&radius=2")
+        uri = URI.parse("https://developers.zomato.com/api/v2.1/search?entity_id=280&entity_type=city#{User.location}&radius=2")
         request = Net::HTTP::Get.new(uri)
         request["Accept"] = "application/json"
         request["User-Key"] = "772b344ef3dce2becde5c51e72f6d9a0"
@@ -12,6 +12,7 @@ class APITest
         response = Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
             http.request(request)
         end
+        
     end
 
     def make_api_call(url)
@@ -43,7 +44,7 @@ class APITest
         end 
         i = 0
         while i < testarr.count 
-            Restaurant.create(name: testarr[i], location: anotherarray[i])
+            Restaurant.find_or_create_by(name: testarr[i], location: anotherarray[i])
             i += 1
         end        
     end 

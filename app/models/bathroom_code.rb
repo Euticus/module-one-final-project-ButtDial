@@ -28,7 +28,7 @@ class BathroomCode < ActiveRecord::Base
   end
 
   def self.create_new_code_menu
-    restaurants_array = Restaurant.all
+    restaurants_array = User.find_restaurants
     prompt_instance.select("Which Restaurant were you at?") do |menu_item|
       restaurants_array.each do |restaurant| 
         menu_item_string = restaurant.name + ": " + restaurant.location
