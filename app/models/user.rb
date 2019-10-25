@@ -1,9 +1,11 @@
 require 'pry'
 class User < ActiveRecord::Base
+
   has_many :bathroom_codes
   has_many :restaurants, through: :bathroom_codes
 
   @@session_user_obj = nil
+  @@user_session_location = nil
 
   def self.prompt_instance
     TTY::Prompt.new
@@ -44,6 +46,7 @@ class User < ActiveRecord::Base
   def self.generate_user_session(username)
     user_obj = get_user_object(username)
     @@session_user_obj = user_obj
+    User.set_my_location
     user_obj.print_welcome_message
     user_obj.generate_user_session_menu
   end
@@ -61,7 +64,8 @@ class User < ActiveRecord::Base
   def print_welcome_message
     print "Welcome " 
     print "#{self.username}".green 
-    print "! What would you like to do?"
+    print "! Your current location is at "
+    puts "#{@@user_session_location.city}, #{@@user_session_location.region_name}".green
   end
 
 
@@ -98,5 +102,10 @@ class User < ActiveRecord::Base
     puts "You've deleted all your entries"
     User.prompt_instance.keypress("Press anywhere to get to Menu")
     User.generate_user_session(self.username)
+  end
+
+  def self.set_my_location
+    @@user_session_location = UserLocation.new
+    @@user_session_location.set_location_by_ip
   end
 end 

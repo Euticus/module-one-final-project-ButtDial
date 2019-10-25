@@ -21,6 +21,7 @@ GEM
       unf (>= 0.0.5, < 1.0.0)
     equatable (0.6.1)
     figlet (1.1.0)
+    geocoder (1.5.2)
     http-accept (1.7.0)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
@@ -99,6 +100,7 @@ DEPENDENCIES
   activerecord (= 5.1.0)
   colorize
   figlet
+  geocoder
   pry
   rake
   require_all
