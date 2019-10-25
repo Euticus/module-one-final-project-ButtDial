@@ -41,6 +41,6 @@ class Restaurant < ActiveRecord::Base
   end
 
   def self.print_separator
-    puts "=".red * 25
+    puts "=".magenta * 25
   end
 end 

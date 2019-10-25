@@ -12,6 +12,7 @@ class BathroomCode < ActiveRecord::Base
   def self.list_of_all_codes
     bathroom_codes_array = BathroomCode.all
     bathroom_codes_array.each do |codes|
+      #binding.pry
       puts "Restaurant: " + codes.restaurant.name.green
       puts "Location: " + codes.restaurant.location
       puts "Bathroom Code: " + codes.bathroom_code.to_s.blue
@@ -23,7 +24,7 @@ class BathroomCode < ActiveRecord::Base
   end
 
   def self.print_separator
-    puts "=".red * 25
+    puts "=".magenta * 25
   end
 
   def self.create_new_code_menu

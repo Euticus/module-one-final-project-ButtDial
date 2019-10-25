@@ -90,7 +90,7 @@ class User < ActiveRecord::Base
   end
 
   def print_separator
-    puts "=".red * 25
+    puts "=".magenta * 25
   end
   
   def delete_my_entries
